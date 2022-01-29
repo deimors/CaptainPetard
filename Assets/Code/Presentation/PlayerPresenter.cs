@@ -20,7 +20,7 @@ public class PlayerPresenter : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Mathf.Abs(Input.GetAxisRaw(Parameters.InputAxes.DropBomb)) > 0)
 		{
 			PlayersCommands.DropBomb(Parameters.PlayerId, transform.position);
 		}
