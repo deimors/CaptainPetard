@@ -908,6 +908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rigidbody: {fileID: 1539844308}
   VelocityScale: 200
+  BombPrefab: {fileID: 200225479028880530, guid: 62d00670c90c29c489cf5b8f72bde8f2, type: 3}
 --- !u!4 &1539844310
 Transform:
   m_ObjectHideFlags: 0
