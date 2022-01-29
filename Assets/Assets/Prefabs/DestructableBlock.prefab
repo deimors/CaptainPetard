@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 7785244391788139421}
   - component: {fileID: 5765696445594320148}
   - component: {fileID: 3721904378755731202}
-  m_Layer: 0
+  - component: {fileID: -4998869272742071535}
+  m_Layer: 6
   m_Name: DestructableBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,3 +112,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-4998869272742071535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4676360746134931867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ea130324f3217248be04a41962e97bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
