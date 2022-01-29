@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
+using Zenject;
 
 public class PlayersAggregate : IPlayersEvents, IPlayerCommands
 {
@@ -79,5 +80,42 @@ public abstract class PlayersEvent
 		{
 			PlayerId = playerId;
 		}
+	}
+
+	public class PlayerFactory : IFactory<PlayerParameters, Unit>
+	{
+		private readonly DiContainer _container;
+		private readonly GameObject _prefab;
+		private readonly Transform _parent;
+
+		public PlayerFactory(DiContainer container, GameObject prefab, Transform parent)
+		{
+			_container = container;
+			_prefab = prefab;
+			_parent = parent;
+		}
+
+		public Unit Create(PlayerParameters param)
+		{
+			var subContainer = _container.CreateSubContainer();
+
+			subContainer.BindInstance(param.PlayerId);
+
+			subContainer.InstantiatePrefab(_prefab, _parent);
+
+			return Unit.Default;
+		}
+	}
+}
+
+public class PlayerParameters
+{
+	public PlayerIdentifier PlayerId { get; }
+	public Vector2 Position { get; }
+
+	public PlayerParameters(PlayerIdentifier playerId, Vector2 position)
+	{
+		PlayerId = playerId;
+		Position = position;
 	}
 }
