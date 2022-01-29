@@ -20,6 +20,7 @@ public class PlayerFactory : IFactory<PlayerParameters, Unit>
 		var subContainer = _container.CreateSubContainer();
 
 		subContainer.BindInstance(param.PlayerId);
+		subContainer.BindInstance(param);
 
 		subContainer.InstantiatePrefab(_prefab, _parent);
 

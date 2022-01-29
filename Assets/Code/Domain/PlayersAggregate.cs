@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
-public class PlayersesAggregate : IPlayersEvents, IPlayersCommands
+public class PlayersAggregate : IPlayersEvents, IPlayersCommands
 {
 	private readonly Subject<PlayersEvent> _events = new Subject<PlayersEvent>();
 	private readonly IDictionary<PlayerIdentifier, int> _bombCounts = new Dictionary<PlayerIdentifier, int>();

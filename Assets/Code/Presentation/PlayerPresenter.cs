@@ -5,9 +5,7 @@ public class PlayerPresenter : MonoBehaviour
 {
 	public Rigidbody2D Rigidbody;
 	public float VelocityScale;
-
-	public GameObject BombPrefab;
-
+	
 	[Inject]
 	public IPlayersCommands PlayersCommands { private get; set; }
 

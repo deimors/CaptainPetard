@@ -12,7 +12,7 @@ public class SceneInstaller : MonoInstaller
 
 	public override void InstallBindings()
 	{
-		Container.BindInterfacesTo<PlayersesAggregate>().AsSingle().NonLazy();
+		Container.BindInterfacesTo<PlayersAggregate>().AsSingle().NonLazy();
 
 		Container.BindPrefabFactory<PlayerFactory, PlayerParameters>(PlayersContainer, PlayerPrefab);
 		Container.BindPrefabFactory<BombFactory, BombParameters>(BombsContainer, BombPrefab);
