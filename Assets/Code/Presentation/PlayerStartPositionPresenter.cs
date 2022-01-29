@@ -4,10 +4,10 @@ using Zenject;
 public class PlayerStartPositionPresenter : MonoBehaviour
 {
 	[Inject]
-	public IPlayerCommands PlayerCommands { private get; set; }
+	public IPlayersCommands PlayersCommands { private get; set; }
 
 	void Start()
 	{
-		PlayerCommands.NewPlayer(transform.position);
+		PlayersCommands.NewPlayer(transform.position);
 	}
 }

@@ -7,14 +7,17 @@ public class SceneInstaller : MonoInstaller
 	public Transform PlayersContainer;
 	public GameObject PlayerPrefab;
 
+	public Transform BombsContainer;
+	public GameObject BombPrefab;
+
 	public override void InstallBindings()
 	{
-		Container.BindInterfacesTo<PlayersAggregate>().AsSingle().NonLazy();
+		Container.BindInterfacesTo<PlayersesAggregate>().AsSingle().NonLazy();
 
-		Container.BindInstance(PlayersContainer).WhenInjectedInto<PlayerFactory>();
-		Container.BindInstance(PlayerPrefab).WhenInjectedInto<PlayerFactory>();
-		Container.BindIFactory<PlayerParameters, Unit>().FromFactory<PlayerFactory>();
-
+		Container.BindPrefabFactory<PlayerFactory, PlayerParameters>(PlayersContainer, PlayerPrefab);
+		Container.BindPrefabFactory<BombFactory, BombParameters>(BombsContainer, BombPrefab);
+		
 		Container.BindIntegration<CreateNewPlayerOnNewPlayerCreated>();
+		Container.BindIntegration<CreateBombOnBombDropped>();
 	}
 }

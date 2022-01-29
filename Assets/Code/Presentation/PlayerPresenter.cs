@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 public class PlayerPresenter : MonoBehaviour
 {
@@ -6,6 +7,12 @@ public class PlayerPresenter : MonoBehaviour
 	public float VelocityScale;
 
 	public GameObject BombPrefab;
+
+	[Inject]
+	public IPlayersCommands PlayersCommands { private get; set; }
+
+	[Inject]
+	public PlayerIdentifier PlayerId { private get; set; }
 
 	// Start is called before the first frame update
 
@@ -18,11 +25,7 @@ public class PlayerPresenter : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			var bombObject = Instantiate(BombPrefab);
-
-			var bombTransform = bombObject.GetComponent<Transform>();
-
-			bombTransform.position = transform.position;
+			PlayersCommands.DropBomb(PlayerId, transform.position);
 		}
 	}
 
