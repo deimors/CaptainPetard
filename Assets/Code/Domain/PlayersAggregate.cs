@@ -11,12 +11,12 @@ public class PlayersAggregate : IPlayersEvents, IPlayersCommands
 	public IDisposable Subscribe(IObserver<PlayersEvent> observer)
 		=> _events.Subscribe(observer);
 
-	public void NewPlayer(Vector2 position)
+	public void NewPlayer(Vector2 position, PlayerInputAxes inputAxes)
 	{
 		var playerId = PlayerIdentifier.Create();
 
 		_bombCounts.Add(playerId, 1);
-		_events.OnNext(new PlayersEvent.NewPlayerCreated(playerId, position));
+		_events.OnNext(new PlayersEvent.NewPlayerCreated(playerId, position, inputAxes));
 	}
 
 	public void DropBomb(PlayerIdentifier playerId, Vector2 position)

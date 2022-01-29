@@ -6,11 +6,13 @@ public abstract class PlayersEvent
 	{
 		public PlayerIdentifier PlayerId { get; }
 		public Vector2 Position { get; }
+		public PlayerInputAxes InputAxes { get; }
 
-		public NewPlayerCreated(PlayerIdentifier playerId, Vector2 position)
+		public NewPlayerCreated(PlayerIdentifier playerId, Vector2 position, PlayerInputAxes inputAxes)
 		{
 			PlayerId = playerId;
 			Position = position;
+			InputAxes = inputAxes;
 		}
 	}
 

@@ -20,7 +20,8 @@ public class CreateNewPlayerOnNewPlayerCreated : IDisposable
 	{
 		var parameters = new PlayerParameters(
 			@event.PlayerId,
-			@event.Position
+			@event.Position,
+			@event.InputAxes
 		);
 
 		_playerFactory.Create(parameters);

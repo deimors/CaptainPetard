@@ -8,28 +8,21 @@ public class PlayerPresenter : MonoBehaviour
 	
 	[Inject]
 	public IPlayersCommands PlayersCommands { private get; set; }
-
+	
 	[Inject]
-	public PlayerIdentifier PlayerId { private get; set; }
-
-	// Start is called before the first frame update
-
-	void Start()
-	{
-
-	}
+	public PlayerParameters Parameters { private get; set; }
 
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			PlayersCommands.DropBomb(PlayerId, transform.position);
+			PlayersCommands.DropBomb(Parameters.PlayerId, transform.position);
 		}
 	}
 
 	void FixedUpdate()
 	{
-		var inputVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+		var inputVector = new Vector2(Input.GetAxis(Parameters.InputAxes.Horizontal), Input.GetAxis(Parameters.InputAxes.Vertical));
 
 		Rigidbody.velocity = inputVector * Time.fixedDeltaTime * VelocityScale;
 	}

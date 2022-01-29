@@ -19,10 +19,9 @@ public class PlayerFactory : IFactory<PlayerParameters, Unit>
 	{
 		var subContainer = _container.CreateSubContainer();
 
-		subContainer.BindInstance(param.PlayerId);
 		subContainer.BindInstance(param);
 
-		subContainer.InstantiatePrefab(_prefab, _parent);
+		subContainer.InstantiatePrefab(_prefab, param.Position, Quaternion.identity, _parent);
 
 		return Unit.Default;
 	}
