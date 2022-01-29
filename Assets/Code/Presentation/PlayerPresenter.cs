@@ -3,6 +3,7 @@ using Zenject;
 
 public class PlayerPresenter : MonoBehaviour
 {
+	public SpriteRenderer SpriteRenderer;
 	public Rigidbody2D Rigidbody;
 	public float VelocityScale;
 	
@@ -11,6 +12,11 @@ public class PlayerPresenter : MonoBehaviour
 	
 	[Inject]
 	public PlayerParameters Parameters { private get; set; }
+
+	void Start()
+	{
+		SpriteRenderer.color = Parameters.Colour.GetColor();
+	}
 
 	void Update()
 	{

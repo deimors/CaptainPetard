@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e15f6627837b6a8449a1179cf0dfe72a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpriteRenderer: {fileID: 2781023069027130632}
   Rigidbody: {fileID: 2781023068824300395}
   VelocityScale: 200
-  BombPrefab: {fileID: 200225479028880530, guid: 62d00670c90c29c489cf5b8f72bde8f2, type: 3}
 --- !u!50 &2781023068824300395
 Rigidbody2D:
   serializedVersion: 4

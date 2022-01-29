@@ -21,7 +21,8 @@ public class CreateNewPlayerOnNewPlayerCreated : IDisposable
 		var parameters = new PlayerParameters(
 			@event.PlayerId,
 			@event.Position,
-			@event.InputAxes
+			@event.InputAxes,
+			@event.Colour
 		);
 
 		_playerFactory.Create(parameters);

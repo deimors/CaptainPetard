@@ -6861,6 +6861,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7314945188460161938, guid: 9a65392b3c591ad4796715b778234508, type: 3}
+      propertyPath: Colour
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7314945188460161938, guid: 9a65392b3c591ad4796715b778234508, type: 3}
       propertyPath: VerticalAxis
       value: Vertical Player 2
       objectReference: {fileID: 0}
