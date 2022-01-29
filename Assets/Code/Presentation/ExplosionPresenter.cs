@@ -18,7 +18,7 @@ public class ExplosionPresenter : MonoBehaviour
 
 	void Start()
 	{
-		if (IsOverlappingStopLayer)
+		if (IsOverlappingStopLayer())
 			return;
 
 		if (_direction is null && _index == 0)
@@ -33,7 +33,7 @@ public class ExplosionPresenter : MonoBehaviour
 			InstantiateExplosionDelayed(_direction.Value);
 		}
 	}
-	
+
 	private void InstantiateExplosionDelayed(Vector2 direction)
 		=> Observable
 			.Timer(TimeSpan.FromMilliseconds(InstantiateDelayMs))
@@ -52,6 +52,13 @@ public class ExplosionPresenter : MonoBehaviour
 		explosion._index = _index + 1;
 	}
 
-	private bool IsOverlappingStopLayer
-		=> Physics2D.OverlapCircle(transform.position, StopTriggerRadius, StopLayers.value) != null;
+	private bool IsOverlappingStopLayer()
+	{
+		var localCollider = Physics2D.OverlapCircle(transform.position, StopTriggerRadius, StopLayers.value);
+		
+		if(localCollider != null)
+			localCollider.SendMessage("HandleExplosion", SendMessageOptions.DontRequireReceiver);
+
+		return localCollider != null;
+	}
 }
