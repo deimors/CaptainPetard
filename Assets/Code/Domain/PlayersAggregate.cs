@@ -13,10 +13,12 @@ public class PlayersAggregate : IPlayersEvents, IPlayerCommands
 	public IDisposable Subscribe(IObserver<PlayersEvent> observer)
 		=> _events.Subscribe(observer);
 
-	public void Add(PlayerIdentifier playerId)
+	public void NewPlayer(Vector2 position)
 	{
+		var playerId = PlayerIdentifier.Create();
+
 		_bombCounts.Add(playerId, 1);
-		_events.OnNext(new PlayersEvent.PlayerAdded(playerId));
+		_events.OnNext(new PlayersEvent.NewPlayerCreated(playerId, position));
 	}
 
 	public void DropBomb(PlayerIdentifier playerId, Vector2 position)
@@ -39,24 +41,65 @@ public interface IPlayersEvents : IObservable<PlayersEvent> {}
 
 public interface IPlayerCommands
 {
-	void Add(PlayerIdentifier playerId);
+	void NewPlayer(Vector2 position);
 	void DropBomb(PlayerIdentifier playerId, Vector2 position);
 	void ReturnBomb(PlayerIdentifier playerId);
 }
 
-public class PlayerIdentifier
+public class PlayerIdentifier : IEquatable<PlayerIdentifier>
 {
+	private readonly Guid _value;
+
+	private PlayerIdentifier(Guid value)
+	{
+		_value = value;
+	}
+
+	public static PlayerIdentifier Create()
+		=> new(Guid.NewGuid());
+
+	public bool Equals(PlayerIdentifier other)
+	{
+		if (ReferenceEquals(null, other)) return false;
+		if (ReferenceEquals(this, other)) return true;
+		return _value.Equals(other._value);
+	}
+
+	public override bool Equals(object obj)
+	{
+		if (ReferenceEquals(null, obj)) return false;
+		if (ReferenceEquals(this, obj)) return true;
+		if (obj.GetType() != this.GetType()) return false;
+		return Equals((PlayerIdentifier) obj);
+	}
+
+	public override int GetHashCode()
+	{
+		return _value.GetHashCode();
+	}
+
+	public static bool operator ==(PlayerIdentifier left, PlayerIdentifier right)
+	{
+		return Equals(left, right);
+	}
+
+	public static bool operator !=(PlayerIdentifier left, PlayerIdentifier right)
+	{
+		return !Equals(left, right);
+	}
 }
 
 public abstract class PlayersEvent
 {
-	public class PlayerAdded : PlayersEvent
+	public class NewPlayerCreated : PlayersEvent
 	{
 		public PlayerIdentifier PlayerId { get; }
+		public Vector2 Position { get; }
 
-		public PlayerAdded(PlayerIdentifier playerId)
+		public NewPlayerCreated(PlayerIdentifier playerId, Vector2 position)
 		{
 			PlayerId = playerId;
+			Position = position;
 		}
 	}
 
@@ -81,30 +124,30 @@ public abstract class PlayersEvent
 			PlayerId = playerId;
 		}
 	}
+}
 
-	public class PlayerFactory : IFactory<PlayerParameters, Unit>
+public class PlayerFactory : IFactory<PlayerParameters, Unit>
+{
+	private readonly DiContainer _container;
+	private readonly GameObject _prefab;
+	private readonly Transform _parent;
+
+	public PlayerFactory(DiContainer container, GameObject prefab, Transform parent)
 	{
-		private readonly DiContainer _container;
-		private readonly GameObject _prefab;
-		private readonly Transform _parent;
+		_container = container;
+		_prefab = prefab;
+		_parent = parent;
+	}
 
-		public PlayerFactory(DiContainer container, GameObject prefab, Transform parent)
-		{
-			_container = container;
-			_prefab = prefab;
-			_parent = parent;
-		}
+	public Unit Create(PlayerParameters param)
+	{
+		var subContainer = _container.CreateSubContainer();
 
-		public Unit Create(PlayerParameters param)
-		{
-			var subContainer = _container.CreateSubContainer();
+		subContainer.BindInstance(param.PlayerId);
 
-			subContainer.BindInstance(param.PlayerId);
+		subContainer.InstantiatePrefab(_prefab, _parent);
 
-			subContainer.InstantiatePrefab(_prefab, _parent);
-
-			return Unit.Default;
-		}
+		return Unit.Default;
 	}
 }
 
