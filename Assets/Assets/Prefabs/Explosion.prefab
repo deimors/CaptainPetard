@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7592877301228079517}
   - component: {fileID: 4421283789253362842}
   - component: {fileID: -5468453448607510980}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,3 +123,6 @@ MonoBehaviour:
   ChildDistance: 0.5
   ChildPrefab: {fileID: 7592877301228079519}
   InstantiateDelayMs: 20
+  StopLayers:
+    serializedVersion: 2
+    m_Bits: 64

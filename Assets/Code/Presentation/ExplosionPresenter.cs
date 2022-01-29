@@ -5,29 +5,35 @@ using UnityEngine;
 public class ExplosionPresenter : MonoBehaviour
 {
 	public int Count = 10;
-	public Vector2? Direction = null;
-	public int Index = 0;
 	public float ChildDistance = 0.5f;
 	public GameObject ChildPrefab;
 	public int InstantiateDelayMs = 20;
+	public float StopTriggerRadius = 0.2f;
+	public LayerMask StopLayers;
 
 	private static readonly Vector2[] CardinalDirections = { Vector2.up, Vector2.down, Vector2.left, Vector3.right };
 
+	private Vector2? _direction = null;
+	private int _index = 0;
+
 	void Start()
 	{
-		if (Direction is null && Index == 0)
+		if (IsOverlappingStopLayer)
+			return;
+
+		if (_direction is null && _index == 0)
 		{
 			foreach (var direction in CardinalDirections)
 			{
 				InstantiateExplosionDelayed(direction);
 			}
 		}
-		else if (Direction is not null && Index < Count)
+		else if (_direction is not null && _index < Count)
 		{
-			InstantiateExplosionDelayed(Direction.Value);
+			InstantiateExplosionDelayed(_direction.Value);
 		}
 	}
-
+	
 	private void InstantiateExplosionDelayed(Vector2 direction)
 		=> Observable
 			.Timer(TimeSpan.FromMilliseconds(InstantiateDelayMs))
@@ -42,7 +48,10 @@ public class ExplosionPresenter : MonoBehaviour
 			Quaternion.identity
 		).GetComponent<ExplosionPresenter>();
 
-		explosion.Direction = direction;
-		explosion.Index = Index + 1;
+		explosion._direction = direction;
+		explosion._index = _index + 1;
 	}
+
+	private bool IsOverlappingStopLayer
+		=> Physics2D.OverlapCircle(transform.position, StopTriggerRadius, StopLayers.value) != null;
 }
