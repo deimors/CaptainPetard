@@ -7079,6 +7079,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Colour: 0
+  RespawnDelaySeconds: 2
 --- !u!4 &1607670797
 Transform:
   m_ObjectHideFlags: 0
@@ -9002,6 +9003,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Colour: 1
+  RespawnDelaySeconds: 2
 --- !u!4 &1965181149
 Transform:
   m_ObjectHideFlags: 0
