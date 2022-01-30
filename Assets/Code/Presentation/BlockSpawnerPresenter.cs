@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.iOS;
 using UnityEngine.Tilemaps;
+using Zenject;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 public class BlockSpawnerPresenter : MonoBehaviour
@@ -23,8 +24,10 @@ public class BlockSpawnerPresenter : MonoBehaviour
     public int numberOfNeutralBlocks;
 
     public List<CellPosition> AvailableCells { get; private set; }
-
     public List<(CellPosition position, DestructableBlockPresenter block)> SpawnedBlocks { get; } = new();
+    
+    [Inject]
+    public IGameCommands GameCommands { private get; set; }
     void Start()
     {
         // Debug.Log($"Min: {nonDescructableBlocks.localBounds.min}");
@@ -91,7 +94,7 @@ public class BlockSpawnerPresenter : MonoBehaviour
 
     public void HandleBlockDestroyed(CellPosition position, int points)
     {
-        // Todo: Do Something with the points
+        GameCommands.AddToScore(points);
         
         // Remove from the spawned blocks and add back to the Available cells
         SpawnedBlocks.RemoveAll(tuple => tuple.block.CellPosition.GridPosition == position.GridPosition);
