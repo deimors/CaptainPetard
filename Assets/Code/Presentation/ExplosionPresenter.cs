@@ -10,6 +10,7 @@ public class ExplosionPresenter : MonoBehaviour
 	public int InstantiateDelayMs = 20;
 	public float TriggerRadius = 0.2f;
 	public LayerMask StopLayers;
+	public SpriteRenderer ExplosionRenderer;
 
 	private static readonly Vector2[] CardinalDirections = { Vector2.up, Vector2.down, Vector2.left, Vector3.right };
 
@@ -40,6 +41,7 @@ public class ExplosionPresenter : MonoBehaviour
 	public void Init(PlayerColours playerColour)
 	{
 		_playerColour = playerColour;
+		ExplosionRenderer.color = playerColour.ToColor();
 	}
 
 	private void InstantiateExplosionDelayed(Vector2 direction)

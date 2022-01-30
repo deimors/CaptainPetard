@@ -119,10 +119,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Count: 10
-  Index: 0
   ChildDistance: 0.5
   ChildPrefab: {fileID: 7592877301228079519}
   InstantiateDelayMs: 20
+  TriggerRadius: 0.2
   StopLayers:
     serializedVersion: 2
     m_Bits: 64
+  ExplosionRenderer: {fileID: 7592877301228079517}
