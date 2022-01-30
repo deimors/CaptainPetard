@@ -20,12 +20,15 @@ public class EnemyPresenter : MonoBehaviour
 
 	void Start()
 	{
-		Observable.Timer(TimeSpan.FromSeconds(InitialDelaySeconds))
-			.Subscribe(_ => ChooseRandomOpenDirection())
-			.AddTo(this);
+		ChooseRandomOpenDirectionAfterDelay();
 
 		ColourIndicatorSprite.color = EnemyColour.ToColor();
 	}
+
+	private void ChooseRandomOpenDirectionAfterDelay()
+		=> Observable.Timer(TimeSpan.FromSeconds(InitialDelaySeconds))
+			.Subscribe(_ => ChooseRandomOpenDirection())
+			.AddTo(this);
 
 	void FixedUpdate()
 	{
@@ -43,6 +46,11 @@ public class EnemyPresenter : MonoBehaviour
 		var openDirections = FindOpenDirections();
 
 		_direction = RandomDirection(openDirections.Where(dir => dir != _direction).ToArray());
+
+		if (_direction == Vector2.zero)
+		{
+			ChooseRandomOpenDirectionAfterDelay();
+		}
 	}
 
 	private static Vector2 RandomDirection(Vector2[] directions)
