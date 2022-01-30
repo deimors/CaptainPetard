@@ -55,8 +55,11 @@ public class PlayersAggregate : IPlayersEvents, IPlayersCommands, IDisposable
 
 		if (playerState.Alive)
 		{
-			_playerStates[playerId] = playerState.Kill();
-			_events.OnNext(new PlayersEvent.PlayerKilled(playerId));
+			playerState = playerState.Kill();
+
+			_playerStates[playerId] = playerState;
+
+			_events.OnNext(new PlayersEvent.PlayerKilled(playerId, playerState.LifeCount));
 
 			Observable.Timer(TimeSpan.FromSeconds(2))
 				.Subscribe(_ => RevivePlayer(playerId))

@@ -41,10 +41,12 @@ public abstract class PlayersEvent
 	public class PlayerKilled : PlayersEvent
 	{
 		public PlayerIdentifier PlayerId { get; }
+		public int RemainingLifeCount { get; }
 
-		public PlayerKilled(PlayerIdentifier playerId)
+		public PlayerKilled(PlayerIdentifier playerId, int remainingLifeCount)
 		{
 			PlayerId = playerId;
+			RemainingLifeCount = remainingLifeCount;
 		}
 	}
 
