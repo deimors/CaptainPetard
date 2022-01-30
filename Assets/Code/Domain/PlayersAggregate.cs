@@ -27,7 +27,7 @@ public class PlayersAggregate : IPlayersEvents, IPlayersCommands, IDisposable
 		_playerStates.Add(playerId, playerState);
 		_playerConfigs.Add(playerId, config);
 
-		_events.OnNext(new PlayersEvent.PlayerAdded(playerId, playerState.LifeCount));
+		_events.OnNext(new PlayersEvent.PlayerAdded(playerId, playerState.LifeCount, config.Colour));
 		_events.OnNext(new PlayersEvent.PlayerSpawned(playerId, config));
 	}
 

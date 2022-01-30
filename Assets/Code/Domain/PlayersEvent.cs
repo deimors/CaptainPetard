@@ -54,11 +54,13 @@ public abstract class PlayersEvent
 	{
 		public PlayerIdentifier PlayerId { get; }
 		public int LifeCount { get; }
+		public PlayerColours Colour { get; }
 
-		public PlayerAdded(PlayerIdentifier playerId, int lifeCount)
+		public PlayerAdded(PlayerIdentifier playerId, int lifeCount, PlayerColours colour)
 		{
 			PlayerId = playerId;
 			LifeCount = lifeCount;
+			Colour = colour;
 		}
 	}
 

@@ -19,7 +19,7 @@ public class HealthPanelPresenter : MonoBehaviour
 		PlayersEvents
 			.OfType<PlayersEvent, PlayersEvent.PlayerAdded>()
 			.Where(playerAdded => playerAdded.PlayerId.Value == PlayerId)
-			.Subscribe(playerAdded => CreateHearts(playerAdded.LifeCount))
+			.Subscribe(playerAdded => CreateHearts(playerAdded.LifeCount, playerAdded.Colour))
 			.AddTo(this);
 
 		PlayersEvents
@@ -29,10 +29,15 @@ public class HealthPanelPresenter : MonoBehaviour
 			.AddTo(this);
 	}
 
-	private void CreateHearts(int count)
+	private void CreateHearts(int count, PlayerColours colour)
 	{
 		_hearts = Enumerable.Range(0, count)
 			.Select(_ => Instantiate(HeartPrefab, transform))
+			.Select(heart =>
+			{
+				heart.GetComponent<Image>().color = colour.ToColor();
+				return heart;
+			})
 			.ToArray();
 	}
 
