@@ -8,7 +8,7 @@ public class ExplosionPresenter : MonoBehaviour
 	public float ChildDistance = 0.5f;
 	public GameObject ChildPrefab;
 	public int InstantiateDelayMs = 20;
-	public float StopTriggerRadius = 0.2f;
+	public float TriggerRadius = 0.2f;
 	public LayerMask StopLayers;
 
 	private static readonly Vector2[] CardinalDirections = { Vector2.up, Vector2.down, Vector2.left, Vector3.right };
@@ -18,6 +18,8 @@ public class ExplosionPresenter : MonoBehaviour
 
 	void Start()
 	{
+		SendHandleExplosionToColliders();
+
 		if (IsOverlappingStopLayer())
 			return;
 
@@ -53,12 +55,15 @@ public class ExplosionPresenter : MonoBehaviour
 	}
 
 	private bool IsOverlappingStopLayer()
-	{
-		var localCollider = Physics2D.OverlapCircle(transform.position, StopTriggerRadius, StopLayers.value);
-		
-		if(localCollider != null)
-			localCollider.SendMessage("HandleExplosion", SendMessageOptions.DontRequireReceiver);
+		=> Physics2D.OverlapCircle(transform.position, TriggerRadius, StopLayers.value) != null;
 
-		return localCollider != null;
+	private void SendHandleExplosionToColliders()
+	{
+		var colliders = Physics2D.OverlapCircleAll(transform.position, TriggerRadius);
+
+		foreach (var otherCollider in colliders)
+		{
+			otherCollider.SendMessage("HandleExplosion", SendMessageOptions.DontRequireReceiver);
+		}
 	}
 }

@@ -2,14 +2,14 @@ using UnityEngine;
 
 public abstract class PlayersEvent
 {
-	public class NewPlayerCreated : PlayersEvent
+	public class PlayerSpawned : PlayersEvent
 	{
 		public PlayerIdentifier PlayerId { get; }
 		public Vector2 Position { get; }
 		public PlayerInputAxes InputAxes { get; }
 		public PlayerColours Colour { get; }
 
-		public NewPlayerCreated(PlayerIdentifier playerId, Vector2 position, PlayerInputAxes inputAxes, PlayerColours colour)
+		public PlayerSpawned(PlayerIdentifier playerId, Vector2 position, PlayerInputAxes inputAxes, PlayerColours colour)
 		{
 			PlayerId = playerId;
 			Position = position;
@@ -35,6 +35,16 @@ public abstract class PlayersEvent
 		public PlayerIdentifier PlayerId { get; }
 
 		public BombReturned(PlayerIdentifier playerId)
+		{
+			PlayerId = playerId;
+		}
+	}
+
+	public class PlayerKilled : PlayersEvent
+	{
+		public PlayerIdentifier PlayerId { get; }
+
+		public PlayerKilled(PlayerIdentifier playerId)
 		{
 			PlayerId = playerId;
 		}

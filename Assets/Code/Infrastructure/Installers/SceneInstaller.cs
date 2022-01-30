@@ -17,7 +17,7 @@ public class SceneInstaller : MonoInstaller
 		Container.BindPrefabFactory<PlayerFactory, PlayerParameters>(PlayersContainer, PlayerPrefab);
 		Container.BindPrefabFactory<BombFactory, BombParameters>(BombsContainer, BombPrefab);
 		
-		Container.BindIntegration<CreateNewPlayerOnNewPlayerCreated>();
+		Container.BindIntegration<CreateNewPlayerOnPlayerSpawned>();
 		Container.BindIntegration<CreateBombOnBombDropped>();
 	}
 }
