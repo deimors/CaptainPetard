@@ -12,6 +12,7 @@ public class EnemyPresenter : MonoBehaviour
 	public LayerMask Obstacles;
 	public float InitialDelaySeconds = 1;
 	public int points;
+	public AudioSource deathSoundEffect;
 
 	public SpriteRenderer ColourIndicatorSprite;
 
@@ -80,6 +81,7 @@ public class EnemyPresenter : MonoBehaviour
 		if (bombColour == Parameters.Colour)
 		{
 			EnemiesCommands.KillEnemy(Parameters.EnemyId, points);
+			deathSoundEffect.Play();
 			Destroy(gameObject);
 		}
 	}
