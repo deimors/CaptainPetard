@@ -81,8 +81,12 @@ public class EnemyPresenter : MonoBehaviour
 		if (bombColour == Parameters.Colour)
 		{
 			EnemiesCommands.KillEnemy(Parameters.EnemyId, points);
-			deathSoundEffect.Play();
+			PlaySound(deathSoundEffect);
 			Destroy(gameObject);
 		}
+	}
+	private void PlaySound(AudioSource source)
+	{
+		Instantiate(source).GetComponent<AudioSource>().Play();
 	}
 }
