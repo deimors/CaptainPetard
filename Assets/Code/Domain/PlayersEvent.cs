@@ -5,16 +5,12 @@ public abstract class PlayersEvent
 	public class PlayerSpawned : PlayersEvent
 	{
 		public PlayerIdentifier PlayerId { get; }
-		public Vector2 Position { get; }
-		public PlayerInputAxes InputAxes { get; }
-		public PlayerColours Colour { get; }
+		public PlayerConfig Config { get; }
 
-		public PlayerSpawned(PlayerIdentifier playerId, Vector2 position, PlayerInputAxes inputAxes, PlayerColours colour)
+		public PlayerSpawned(PlayerIdentifier playerId, PlayerConfig config)
 		{
 			PlayerId = playerId;
-			Position = position;
-			InputAxes = inputAxes;
-			Colour = colour;
+			Config = config;
 		}
 	}
 

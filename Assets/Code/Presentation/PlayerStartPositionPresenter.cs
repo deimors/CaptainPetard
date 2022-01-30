@@ -14,10 +14,12 @@ public class PlayerStartPositionPresenter : MonoBehaviour
 
 	void Start()
 	{
-		PlayersCommands.NewPlayer(
-			transform.position, 
+		var config = new PlayerConfig(
+			transform.position,
 			new PlayerInputAxes(HorizontalAxis, VerticalAxis, DropBomb),
 			Colour
 		);
+		
+		PlayersCommands.NewPlayer(config);
 	}
 }

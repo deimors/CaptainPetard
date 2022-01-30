@@ -16,14 +16,14 @@ public class PlayersAggregate : IPlayersEvents, IPlayersCommands, IDisposable
 	public IDisposable Subscribe(IObserver<PlayersEvent> observer)
 		=> _events.Subscribe(observer);
 
-	public void NewPlayer(Vector2 position, PlayerInputAxes inputAxes, PlayerColours colour)
+	public void NewPlayer(PlayerConfig config)
 	{
 		var playerId = PlayerIdentifier.Create();
 
 		_playerStates.Add(playerId, _initialState);
-		_playerConfigs.Add(playerId, new PlayerConfig(position, inputAxes, colour));
+		_playerConfigs.Add(playerId, config);
 		
-		_events.OnNext(new PlayersEvent.PlayerSpawned(playerId, position, inputAxes, colour));
+		_events.OnNext(new PlayersEvent.PlayerSpawned(playerId, config));
 	}
 
 	public void DropBomb(PlayerIdentifier playerId, Vector2 position)
@@ -65,9 +65,9 @@ public class PlayersAggregate : IPlayersEvents, IPlayersCommands, IDisposable
 		if (!playerState.Alive && playerState.LifeCount > 0)
 		{
 			_playerStates[playerId] = playerState.Revive();
-			var playerConfig = _playerConfigs[playerId];
+			var config = _playerConfigs[playerId];
 
-			_events.OnNext(new PlayersEvent.PlayerSpawned(playerId, playerConfig.Position, playerConfig.InputAxes, playerConfig.Colour));
+			_events.OnNext(new PlayersEvent.PlayerSpawned(playerId, config));
 		}
 	}
 

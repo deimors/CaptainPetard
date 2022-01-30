@@ -3,15 +3,11 @@ using UnityEngine;
 public class PlayerParameters
 {
 	public PlayerIdentifier PlayerId { get; }
-	public Vector2 Position { get; }
-	public PlayerInputAxes InputAxes { get; }
-	public PlayerColours Colour { get; }
+	public PlayerConfig Config { get; }
 
-	public PlayerParameters(PlayerIdentifier playerId, Vector2 position, PlayerInputAxes inputAxes, PlayerColours colour)
+	public PlayerParameters(PlayerIdentifier playerId, PlayerConfig config)
 	{
 		PlayerId = playerId;
-		Position = position;
-		InputAxes = inputAxes;
-		Colour = colour;
+		Config = config;
 	}
 }

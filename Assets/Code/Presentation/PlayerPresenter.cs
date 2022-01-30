@@ -21,7 +21,7 @@ public class PlayerPresenter : MonoBehaviour
 
 	void Start()
 	{
-		SpriteRenderer.color = Parameters.Colour.GetColor();
+		SpriteRenderer.color = Parameters.Config.Colour.GetColor();
 
 		PlayersEvents
 			.OfType<PlayersEvent, PlayersEvent.PlayerKilled>()
@@ -32,7 +32,7 @@ public class PlayerPresenter : MonoBehaviour
 
 	void Update()
 	{
-		if (Mathf.Abs(Input.GetAxisRaw(Parameters.InputAxes.DropBomb)) > 0)
+		if (Mathf.Abs(Input.GetAxisRaw(Parameters.Config.InputAxes.DropBomb)) > 0)
 		{
 			if (!_bombButtonLatch)
 			{
@@ -48,7 +48,7 @@ public class PlayerPresenter : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		var inputVector = new Vector2(Input.GetAxis(Parameters.InputAxes.Horizontal), Input.GetAxis(Parameters.InputAxes.Vertical));
+		var inputVector = new Vector2(Input.GetAxis(Parameters.Config.InputAxes.Horizontal), Input.GetAxis(Parameters.Config.InputAxes.Vertical));
 
 		Rigidbody.velocity = inputVector * Time.fixedDeltaTime * VelocityScale;
 	}
