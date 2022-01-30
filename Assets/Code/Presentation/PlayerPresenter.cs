@@ -8,6 +8,7 @@ public class PlayerPresenter : MonoBehaviour
 	public Rigidbody2D Rigidbody;
 	public float VelocityScale;
 	public LayerMask KillOnContact;
+	public AudioSource deathSound;
 
 	private bool _bombButtonLatch;
 	
@@ -58,6 +59,7 @@ public class PlayerPresenter : MonoBehaviour
 	{
 		if (bombPlayerColour == Parameters.Config.Colour)
 		{
+			PlaySound(deathSound);
 			PlayersCommands.KillPlayer(Parameters.PlayerId);
 		}
 	}
@@ -66,7 +68,13 @@ public class PlayerPresenter : MonoBehaviour
 	{
 		if ((KillOnContact.value & (1 << collision.gameObject.layer)) != 0)
 		{
+			PlaySound(deathSound);
 			PlayersCommands.KillPlayer(Parameters.PlayerId);
 		}
+	}
+	
+	private void PlaySound(AudioSource source)
+	{
+		Instantiate(source).GetComponent<AudioSource>().Play();
 	}
 }
