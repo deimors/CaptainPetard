@@ -28,7 +28,9 @@ public class BombPresenter : MonoBehaviour
 	{
 		PlayersCommands.ReturnBomb(Parameters.OwnerId);
 
-		Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
+		Instantiate(ExplosionPrefab, transform.position, Quaternion.identity)
+			.GetComponent<ExplosionPresenter>()
+			.Init(Parameters.PlayerColour);
 
 		Destroy(gameObject);
 	}

@@ -53,8 +53,11 @@ public class PlayerPresenter : MonoBehaviour
 		Rigidbody.velocity = inputVector * Time.fixedDeltaTime * VelocityScale;
 	}
 
-	public void HandleExplosion()
+	public void HandleExplosion(PlayerColours bombPlayerColour)
 	{
-		PlayersCommands.KillPlayer(Parameters.PlayerId);
+		if (bombPlayerColour == Parameters.Config.Colour)
+		{
+			PlayersCommands.KillPlayer(Parameters.PlayerId);
+		}
 	}
 }

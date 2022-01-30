@@ -13,6 +13,7 @@ public class ExplosionPresenter : MonoBehaviour
 
 	private static readonly Vector2[] CardinalDirections = { Vector2.up, Vector2.down, Vector2.left, Vector3.right };
 
+	private PlayerColours _playerColour;
 	private Vector2? _direction = null;
 	private int _index = 0;
 
@@ -36,6 +37,11 @@ public class ExplosionPresenter : MonoBehaviour
 		}
 	}
 
+	public void Init(PlayerColours playerColour)
+	{
+		_playerColour = playerColour;
+	}
+
 	private void InstantiateExplosionDelayed(Vector2 direction)
 		=> Observable
 			.Timer(TimeSpan.FromMilliseconds(InstantiateDelayMs))
@@ -52,6 +58,7 @@ public class ExplosionPresenter : MonoBehaviour
 
 		explosion._direction = direction;
 		explosion._index = _index + 1;
+		explosion._playerColour = _playerColour;
 	}
 
 	private bool IsOverlappingStopLayer()
@@ -63,7 +70,7 @@ public class ExplosionPresenter : MonoBehaviour
 
 		foreach (var otherCollider in colliders)
 		{
-			otherCollider.SendMessage("HandleExplosion", SendMessageOptions.DontRequireReceiver);
+			otherCollider.SendMessage("HandleExplosion", _playerColour, SendMessageOptions.DontRequireReceiver);
 		}
 	}
 }
