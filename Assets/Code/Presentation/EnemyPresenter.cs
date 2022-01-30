@@ -11,6 +11,9 @@ public class EnemyPresenter : MonoBehaviour
 	public LayerMask Obstacles;
 	public float InitialDelaySeconds = 1;
 
+	public PlayerColours EnemyColour;
+	public SpriteRenderer ColourIndicatorSprite;
+
 	private Vector2 _direction;
 
 	private static readonly Vector2[] CardinalDirections = { Vector2.up, Vector2.down, Vector2.left, Vector3.right };
@@ -20,6 +23,8 @@ public class EnemyPresenter : MonoBehaviour
 		Observable.Timer(TimeSpan.FromSeconds(InitialDelaySeconds))
 			.Subscribe(_ => ChooseRandomOpenDirection())
 			.AddTo(this);
+
+		ColourIndicatorSprite.color = EnemyColour.ToColor();
 	}
 
 	void FixedUpdate()
