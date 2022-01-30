@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using UniRx;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 public class EnemyPresenter : MonoBehaviour
@@ -11,18 +12,20 @@ public class EnemyPresenter : MonoBehaviour
 	public LayerMask Obstacles;
 	public float InitialDelaySeconds = 1;
 
-	public PlayerColours EnemyColour;
 	public SpriteRenderer ColourIndicatorSprite;
 
 	private Vector2 _direction;
 
 	private static readonly Vector2[] CardinalDirections = { Vector2.up, Vector2.down, Vector2.left, Vector3.right };
 
+	[Inject]
+	public EnemyParameters Parameters { private get; set; }
+
 	void Start()
 	{
 		ChooseRandomOpenDirectionAfterDelay();
 
-		ColourIndicatorSprite.color = EnemyColour.ToColor();
+		ColourIndicatorSprite.color = Parameters.Colour.ToColor();
 	}
 
 	private void ChooseRandomOpenDirectionAfterDelay()
@@ -70,7 +73,7 @@ public class EnemyPresenter : MonoBehaviour
 
 	public void HandleExplosion(PlayerColours bombColour)
 	{
-		if (bombColour == EnemyColour)
+		if (bombColour == Parameters.Colour)
 		{
 			Destroy(gameObject);
 		}
