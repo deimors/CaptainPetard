@@ -61,4 +61,8 @@ public abstract class PlayersEvent
 			LifeCount = lifeCount;
 		}
 	}
+
+	public class NoLivesRemaining : PlayersEvent
+	{
+	}
 }

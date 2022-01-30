@@ -25,5 +25,6 @@ public class SceneInstaller : MonoInstaller
 		Container.BindIntegration<CreateNewPlayerOnPlayerSpawned>();
 		Container.BindIntegration<CreateBombOnBombDropped>();
 		Container.BindIntegration<CreateNewEnemyOnEnemySpawned>();
+		Container.BindIntegration<GameOverWhenNoLivesRemaining>();
 	}
 }

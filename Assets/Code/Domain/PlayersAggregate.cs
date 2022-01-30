@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
@@ -64,8 +65,16 @@ public class PlayersAggregate : IPlayersEvents, IPlayersCommands, IDisposable
 			Observable.Timer(TimeSpan.FromSeconds(2))
 				.Subscribe(_ => RevivePlayer(playerId))
 				.AddTo(_disposable);
+
+			if (NoPlayersHaveRemainingLife)
+			{
+				_events.OnNext(new PlayersEvent.NoLivesRemaining());
+			}
 		}
 	}
+
+	private bool NoPlayersHaveRemainingLife 
+		=> _playerStates.All(kvp => kvp.Value.LifeCount == 0);
 
 	private void RevivePlayer(PlayerIdentifier playerId)
 	{
