@@ -15,10 +15,12 @@ public abstract class EnemiesEvent
 	public class EnemyKilled : EnemiesEvent
 	{
 		public EnemyIdentifier EnemyId { get; }
+		public int Points { get; }
 
-		public EnemyKilled(EnemyIdentifier enemyId)
+		public EnemyKilled(EnemyIdentifier enemyId, int points)
 		{
 			EnemyId = enemyId;
+			Points = points;
 		}
 	}
 

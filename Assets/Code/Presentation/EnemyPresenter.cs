@@ -11,6 +11,7 @@ public class EnemyPresenter : MonoBehaviour
 	public Rigidbody2D Rigidbody;
 	public LayerMask Obstacles;
 	public float InitialDelaySeconds = 1;
+	public int points;
 
 	public SpriteRenderer ColourIndicatorSprite;
 
@@ -78,7 +79,7 @@ public class EnemyPresenter : MonoBehaviour
 	{
 		if (bombColour == Parameters.Colour)
 		{
-			EnemiesCommands.KillEnemy(Parameters.EnemyId);
+			EnemiesCommands.KillEnemy(Parameters.EnemyId, points);
 			Destroy(gameObject);
 		}
 	}

@@ -159,6 +159,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2112
   InitialDelaySeconds: 1
+  points: 20
   ColourIndicatorSprite: {fileID: 8935976476906340119}
 --- !u!50 &8935976477429811917
 Rigidbody2D:
