@@ -12,11 +12,16 @@ public class DestructableBlockPresenter : MonoBehaviour
 	{
 		if (BlockColour.CanBeDestroyedBy(bombColour))
 		{
-			Destroy(gameObject);
-			if (BlockController != null)
-			{
-				BlockController.HandleBlockDestroyed(CellPosition, points);
-			}
+			DestroyBlock(points);
+		}
+	}
+
+	public void DestroyBlock(int pointsForDestruction = 0)
+	{
+		Destroy(gameObject);
+		if (BlockController != null)
+		{
+			BlockController.HandleBlockDestroyed(CellPosition, pointsForDestruction);
 		}
 	}
 }

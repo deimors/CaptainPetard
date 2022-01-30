@@ -1,5 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using ModestTree;
+using Newtonsoft.Json;
+using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
@@ -21,6 +25,9 @@ public class BlockSpawnerPresenter : MonoBehaviour
     
     [Inject]
     public IGameCommands GameCommands { private get; set; }
+    
+    [Inject]
+    public IPlayersEvents PlayersEvents { private get; set; }
     void Start()
     {
         // Debug.Log($"Min: {nonDescructableBlocks.localBounds.min}");
@@ -28,7 +35,10 @@ public class BlockSpawnerPresenter : MonoBehaviour
 
         // Debug.Log($"Size: {nonDescructableBlocks.size}");
 
-        AvailableCells = GetAvailableCells().ToList();
+        PlayersEvents.OfType<PlayersEvent, PlayersEvent.PlayerSpawned>()
+            .Subscribe(HandlePlayerSpawnedEvent);
+
+            AvailableCells = GetAvailableCells().ToList();
         
         SpawnBlocks(blueBlocks, numberOfBlueAndRedBlocks);
         SpawnBlocks(redBlocks, numberOfBlueAndRedBlocks);
@@ -63,6 +73,8 @@ public class BlockSpawnerPresenter : MonoBehaviour
     private IEnumerable<CellPosition> GetAvailableCells()
     {
         var cellBounds = nonDescructableBlocks.cellBounds;
+        // This is because the actual size of the playable map is 1 cell bigger on all sides
+        // than the tilemap because the tilemap only goes to the edges of the indestructible blocks
         var xMin = cellBounds.xMin - 1;
         var xMax = cellBounds.xMax + 1;
         var yMin = cellBounds.yMin - 1;
@@ -94,6 +106,7 @@ public class BlockSpawnerPresenter : MonoBehaviour
         AvailableCells.Add(position);
     }
 
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -119,6 +132,35 @@ public class BlockSpawnerPresenter : MonoBehaviour
 
         return (blueCount, redCount, neutralCount);
     }
+
+    private void HandlePlayerSpawnedEvent(PlayersEvent.PlayerSpawned @event) => 
+        RemoveCloseSpawnedBlocks(@event.Config.Position);
+
+    private void RemoveCloseSpawnedBlocks(Vector2 position)
+    {
+        var gridCoordinate = GetGridCoordinates(position);
+        var positionsToUnblock = new Vector2[]
+        {
+            new Vector2Int(gridCoordinate.x, gridCoordinate.y),
+            new Vector2Int(gridCoordinate.x, gridCoordinate.y + 1),
+            new Vector2Int(gridCoordinate.x, gridCoordinate.y - 1),
+            new Vector2Int(gridCoordinate.x - 1, gridCoordinate.y),
+            new Vector2Int(gridCoordinate.x + 1, gridCoordinate.y),
+        };
+
+        var blocksToRemove = SpawnedBlocks
+            .Where<(CellPosition position, DestructableBlockPresenter block)>
+                (tuple => positionsToUnblock.Contains(tuple.position.GridPosition)).ToArray();
+
+        foreach (var blockToRemove in blocksToRemove)
+        {
+            blockToRemove.block.DestroyBlock();
+        }
+    }
+
+    private Vector3Int GetGridCoordinates(Vector2 worldCoordinates) =>
+        nonDescructableBlocks.layoutGrid.WorldToCell(new Vector3(worldCoordinates.x, worldCoordinates.y, 0)); 
+    
 }
 
 public class CellPosition
