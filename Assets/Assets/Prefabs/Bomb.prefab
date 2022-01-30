@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1110267303291160673}
   - component: {fileID: 6840979597074817969}
   - component: {fileID: -4707792586045960476}
+  - component: {fileID: 4040423526004018383}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Untagged
@@ -103,6 +104,10 @@ MonoBehaviour:
   ExplodeTimeSeconds: 1.5
   ColourIndicatorSprite: {fileID: 2476163391589294799}
   explosionSound: {fileID: 2417526433780314434, guid: 503fde38dd0496445a1bf3773b02b911, type: 3}
+  BombDropperLayers:
+    serializedVersion: 2
+    m_Bits: 4096
+  BombCollider: {fileID: 4040423526004018383}
 --- !u!82 &-4707792586045960476
 AudioSource:
   m_ObjectHideFlags: 0
@@ -199,6 +204,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!58 &4040423526004018383
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200225479028880530}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.4
 --- !u!1 &2857670848565530728
 GameObject:
   m_ObjectHideFlags: 0

@@ -135,7 +135,7 @@ MonoBehaviour:
   Rigidbody: {fileID: 8935976477429811917}
   Obstacles:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 2112
   InitialDelaySeconds: 1
   EnemyColour: 0
   ColourIndicatorSprite: {fileID: 8935976476906340119}

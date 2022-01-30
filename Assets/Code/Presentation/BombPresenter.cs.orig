@@ -8,9 +8,12 @@ public class BombPresenter : MonoBehaviour
 	public GameObject ExplosionPrefab;
 	public double ExplodeTimeSeconds = 1.5;
 	public SpriteRenderer ColourIndicatorSprite;
+<<<<<<< HEAD
 	public AudioSource explosionSound;
+=======
 	public LayerMask BombDropperLayers;
 	public Collider2D BombCollider;
+>>>>>>> 35b7cf6 (Enemies and players collide with bombs)
 
 	[Inject]
 	public IPlayersCommands PlayersCommands { private get; set; }
@@ -20,7 +23,6 @@ public class BombPresenter : MonoBehaviour
 
 	void Start()
 	{
-		BombCollider.isTrigger = true;
 		ColourIndicatorSprite.color = Parameters.PlayerColour.ToColor();
 
 		Observable.Timer(TimeSpan.FromSeconds(ExplodeTimeSeconds))
@@ -40,6 +42,13 @@ public class BombPresenter : MonoBehaviour
 		Destroy(gameObject);
 	}
 
+<<<<<<< HEAD
+	private void PlaySound()
+	{
+		Instantiate(explosionSound).GetComponent<AudioSource>().Play();
+	}
+	
+=======
 	void OnTriggerExit2D(Collider2D other)
 	{
 		if ((BombDropperLayers.value & (1 << other.gameObject.layer)) != 0)
@@ -47,10 +56,5 @@ public class BombPresenter : MonoBehaviour
 			BombCollider.isTrigger = false;
 		}
 	}
-
-	private void PlaySound()
-	{
-		Instantiate(explosionSound).GetComponent<AudioSource>().Play();
-	}
-	
+>>>>>>> 35b7cf6 (Enemies and players collide with bombs)
 }
