@@ -8,6 +8,7 @@ public class BombPresenter : MonoBehaviour
 	public GameObject ExplosionPrefab;
 	public double ExplodeTimeSeconds = 1.5;
 	public SpriteRenderer ColourIndicatorSprite;
+	public AudioSource explosionSound;
 
 	[Inject]
 	public IPlayersCommands PlayersCommands { private get; set; }
@@ -27,6 +28,7 @@ public class BombPresenter : MonoBehaviour
 	private void Explode()
 	{
 		PlayersCommands.ReturnBomb(Parameters.OwnerId);
+		PlaySound();
 
 		Instantiate(ExplosionPrefab, transform.position, Quaternion.identity)
 			.GetComponent<ExplosionPresenter>()
@@ -34,4 +36,10 @@ public class BombPresenter : MonoBehaviour
 
 		Destroy(gameObject);
 	}
+
+	private void PlaySound()
+	{
+		Instantiate(explosionSound).GetComponent<AudioSource>().Play();
+	}
+	
 }
