@@ -33,7 +33,9 @@ public class PlayersAggregate : IPlayersEvents, IPlayersCommands, IDisposable
 		if (playerState.BombCount > 0)
 		{
 			_playerStates[playerId] = playerState.UseBomb();
-			_events.OnNext(new PlayersEvent.BombDropped(playerId, position));
+			var config = _playerConfigs[playerId];
+
+			_events.OnNext(new PlayersEvent.BombDropped(playerId, position, config.Colour));
 		}
 	}
 

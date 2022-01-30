@@ -18,11 +18,13 @@ public abstract class PlayersEvent
 	{
 		public PlayerIdentifier PlayerId { get; }
 		public Vector2 Position { get; }
+		public PlayerColours PlayerColour { get; }
 
-		public BombDropped(PlayerIdentifier playerId, Vector2 position)
+		public BombDropped(PlayerIdentifier playerId, Vector2 position, PlayerColours playerColour)
 		{
 			PlayerId = playerId;
 			Position = position;
+			PlayerColour = playerColour;
 		}
 	}
 

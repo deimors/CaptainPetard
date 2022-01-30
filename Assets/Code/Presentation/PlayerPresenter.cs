@@ -21,7 +21,7 @@ public class PlayerPresenter : MonoBehaviour
 
 	void Start()
 	{
-		SpriteRenderer.color = Parameters.Config.Colour.GetColor();
+		SpriteRenderer.color = Parameters.Config.Colour.ToColor();
 
 		PlayersEvents
 			.OfType<PlayersEvent, PlayersEvent.PlayerKilled>()

@@ -9,7 +9,7 @@ public enum PlayerColours
 
 public static class PlayerColoursExtensions
 {
-	public static Color GetColor(this PlayerColours colour)
+	public static Color ToColor(this PlayerColours colour)
 	{
 		switch (colour)
 		{

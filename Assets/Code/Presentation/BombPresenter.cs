@@ -7,6 +7,7 @@ public class BombPresenter : MonoBehaviour
 {
 	public GameObject ExplosionPrefab;
 	public double ExplodeTimeSeconds = 1.5;
+	public SpriteRenderer ColourIndicatorSprite;
 
 	[Inject]
 	public IPlayersCommands PlayersCommands { private get; set; }
@@ -16,6 +17,8 @@ public class BombPresenter : MonoBehaviour
 
 	void Start()
 	{
+		ColourIndicatorSprite.color = Parameters.PlayerColour.ToColor();
+
 		Observable.Timer(TimeSpan.FromSeconds(ExplodeTimeSeconds))
 			.Subscribe(_ => Explode())
 			.AddTo(this);

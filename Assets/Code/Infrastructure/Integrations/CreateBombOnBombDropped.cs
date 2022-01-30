@@ -20,7 +20,8 @@ public class CreateBombOnBombDropped : IDisposable
 	{
 		var parameters = new BombParameters(
 			@event.PlayerId,
-			@event.Position
+			@event.Position,
+			@event.PlayerColour
 		);
 
 		_bombFactory.Create(parameters);
