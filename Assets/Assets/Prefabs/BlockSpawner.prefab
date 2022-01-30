@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1245004836371936671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1245004836371936641}
+  - component: {fileID: 1245004836371936640}
+  m_Layer: 0
+  m_Name: BlockSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1245004836371936641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245004836371936671}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1245004836371936640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245004836371936671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da2f7f145cce96748807123c4351f906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walls: {fileID: 0}
+  nonDescructableBlocks: {fileID: 0}
+  blueBlocks:
+  - {fileID: 6681376696074400470, guid: 90b22440acc996a499e32c1c0bba2789, type: 3}
+  - {fileID: 1224454175531922307, guid: 983ec15f1a4240e489d1eded8b916554, type: 3}
+  redBlocks:
+  - {fileID: 866898690809808588, guid: a5bd1837d4d0bf14d9662dc81e202d99, type: 3}
+  - {fileID: 6553326039084555102, guid: a0b1377c192861c4b8ff039874a1f425, type: 3}
+  neutralBlocks:
+  - {fileID: 5452259802279229232, guid: b23133daf025a4647ba5517db8adfadb, type: 3}
+  - {fileID: 3338303219950295922, guid: ba19034e5a676e54e8ff108e3e04b3ed, type: 3}
+  - {fileID: 3985001026637167159, guid: b3893dab3fdb62e4c88a7c0e594e41d4, type: 3}
+  - {fileID: 7999420638017463628, guid: e56a80a837e0b08409febdf02fd1e569, type: 3}
+  numberOfBlueAndRedBlocks: 30
+  numberOfNeutralBlocks: 60
