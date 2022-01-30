@@ -1,10 +1,13 @@
 using UniRx;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 public class GameOverPresenter : MonoBehaviour
 {
 	public GameObject GameOverPanel;
+	
+	private bool _gameOver;
 
 	[Inject]
 	public IGameEvents GameEvents { private get; set; }
@@ -15,7 +18,19 @@ public class GameOverPresenter : MonoBehaviour
 
 		GameEvents
 			.OfType<GameEvent, GameEvent.GameOver>()
-			.Subscribe(_ => GameOverPanel.SetActive(true))
+			.Subscribe(_ =>
+			{
+				_gameOver = true;
+				GameOverPanel.SetActive(true);
+			})
 			.AddTo(this);
+	}
+
+	void Update()
+	{
+		if (_gameOver && Input.anyKeyDown)
+		{
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		}
 	}
 }
