@@ -7,6 +7,7 @@ public class PlayerPresenter : MonoBehaviour
 	public SpriteRenderer SpriteRenderer;
 	public Rigidbody2D Rigidbody;
 	public float VelocityScale;
+	public LayerMask KillOnContact;
 
 	private bool _bombButtonLatch;
 	
@@ -56,6 +57,14 @@ public class PlayerPresenter : MonoBehaviour
 	public void HandleExplosion(PlayerColours bombPlayerColour)
 	{
 		if (bombPlayerColour == Parameters.Config.Colour)
+		{
+			PlayersCommands.KillPlayer(Parameters.PlayerId);
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D collision)
+	{
+		if ((KillOnContact.value & (1 << collision.gameObject.layer)) != 0)
 		{
 			PlayersCommands.KillPlayer(Parameters.PlayerId);
 		}

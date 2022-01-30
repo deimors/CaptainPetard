@@ -50,6 +50,9 @@ MonoBehaviour:
   SpriteRenderer: {fileID: 2781023069027130632}
   Rigidbody: {fileID: 2781023068824300395}
   VelocityScale: 200
+  KillOnContact:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!50 &2781023068824300395
 Rigidbody2D:
   serializedVersion: 4
