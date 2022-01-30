@@ -1,4 +1,3 @@
-using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -17,6 +16,7 @@ public class SceneInstaller : MonoInstaller
 	{
 		Container.BindInterfacesTo<PlayersAggregate>().AsSingle().NonLazy();
 		Container.BindInterfacesTo<EnemiesAggregate>().AsSingle().NonLazy();
+		Container.BindInterfacesTo<GameAggregate>().AsSingle().NonLazy();
 
 		Container.BindPrefabFactory<PlayerFactory, PlayerParameters>(PlayersContainer, PlayerPrefab);
 		Container.BindPrefabFactory<BombFactory, BombParameters>(BombsContainer, BombPrefab);
