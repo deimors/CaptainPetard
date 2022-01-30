@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
@@ -20,9 +21,11 @@ public class ExplosionPresenter : MonoBehaviour
 
 	void Start()
 	{
-		SendHandleExplosionToColliders();
+		var colliders = GetOverlappingColliders();
 
-		if (IsOverlappingStopLayer())
+		SendHandleExplosionToColliders(colliders);
+
+		if (IsOverlappingStopLayer(colliders))
 			return;
 
 		if (_direction is null && _index == 0)
@@ -63,16 +66,17 @@ public class ExplosionPresenter : MonoBehaviour
 		explosion._playerColour = _playerColour;
 	}
 
-	private bool IsOverlappingStopLayer()
-		=> Physics2D.OverlapCircle(transform.position, TriggerRadius, StopLayers.value) != null;
+	private bool IsOverlappingStopLayer(Collider2D[] colliders)
+		=> colliders.Any(c => (StopLayers.value & (1 << c.gameObject.layer)) != 0);
 
-	private void SendHandleExplosionToColliders()
+	private void SendHandleExplosionToColliders(Collider2D[] colliders)
 	{
-		var colliders = Physics2D.OverlapCircleAll(transform.position, TriggerRadius);
-
 		foreach (var otherCollider in colliders)
 		{
 			otherCollider.SendMessage("HandleExplosion", _playerColour, SendMessageOptions.DontRequireReceiver);
 		}
 	}
+
+	private Collider2D[] GetOverlappingColliders()
+		=> Physics2D.OverlapCircleAll(transform.position, TriggerRadius);
 }
