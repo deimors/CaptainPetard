@@ -21,6 +21,9 @@ public class EnemyPresenter : MonoBehaviour
 	[Inject]
 	public EnemyParameters Parameters { private get; set; }
 
+	[Inject]
+	public IEnemiesCommands EnemiesCommands { private get; set; }
+
 	void Start()
 	{
 		ChooseRandomOpenDirectionAfterDelay();
@@ -75,6 +78,7 @@ public class EnemyPresenter : MonoBehaviour
 	{
 		if (bombColour == Parameters.Colour)
 		{
+			EnemiesCommands.KillEnemy(Parameters.EnemyId);
 			Destroy(gameObject);
 		}
 	}

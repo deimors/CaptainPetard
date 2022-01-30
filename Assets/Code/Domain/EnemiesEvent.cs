@@ -11,4 +11,18 @@ public abstract class EnemiesEvent
 			Config = config;
 		}
 	}
+
+	public class EnemyKilled : EnemiesEvent
+	{
+		public EnemyIdentifier EnemyId { get; }
+
+		public EnemyKilled(EnemyIdentifier enemyId)
+		{
+			EnemyId = enemyId;
+		}
+	}
+
+	public class AllEnemiesKilled : EnemiesEvent
+	{
+	}
 }
