@@ -4,5 +4,5 @@ public interface IEnemiesCommands
 {
 	void AddEnemy(Vector2 position, PlayerColours colour);
 
-	void KillEnemy(EnemyIdentifier enemyId);
+	void KillEnemy(EnemyIdentifier enemyId, int points);
 }

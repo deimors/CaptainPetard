@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2357529934505714132, guid: a0b1377c192861c4b8ff039874a1f425, type: 3}
+      propertyPath: points
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2357529934505714132, guid: a0b1377c192861c4b8ff039874a1f425, type: 3}
       propertyPath: BlockColour
       value: 2
       objectReference: {fileID: 0}

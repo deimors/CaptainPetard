@@ -1,5 +1,7 @@
 using System;
 using UniRx;
+using Unity.VisualScripting;
+using Zenject;
 
 public class GameAggregate : IGameEvents, IGameCommands
 {
@@ -9,6 +11,11 @@ public class GameAggregate : IGameEvents, IGameCommands
 
 	public IDisposable Subscribe(IObserver<GameEvent> observer)
 		=> _events.Subscribe(observer);
+	
+	void Start()
+	{
+		_events.OnNext(new GameEvent.ScoreChanged(_score));
+	}
 
 	public void GameOver()
 	{
