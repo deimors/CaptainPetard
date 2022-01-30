@@ -16,13 +16,17 @@ public class PlayersAggregate : IPlayersEvents, IPlayersCommands, IDisposable
 	public IDisposable Subscribe(IObserver<PlayersEvent> observer)
 		=> _events.Subscribe(observer);
 
-	public void NewPlayer(PlayerConfig config)
+	public void NewPlayer(PlayerIdentifier playerId, PlayerConfig config)
 	{
-		var playerId = PlayerIdentifier.Create();
+		if (_playerStates.ContainsKey(playerId))
+			throw new ArgumentException($"PlayerId {playerId} already added");
 
-		_playerStates.Add(playerId, _initialState);
+		var playerState = _initialState;
+
+		_playerStates.Add(playerId, playerState);
 		_playerConfigs.Add(playerId, config);
-		
+
+		_events.OnNext(new PlayersEvent.PlayerAdded(playerId, playerState.LifeCount));
 		_events.OnNext(new PlayersEvent.PlayerSpawned(playerId, config));
 	}
 
@@ -66,7 +70,9 @@ public class PlayersAggregate : IPlayersEvents, IPlayersCommands, IDisposable
 
 		if (!playerState.Alive && playerState.LifeCount > 0)
 		{
-			_playerStates[playerId] = playerState.Revive();
+			playerState = playerState.Revive();
+
+			_playerStates[playerId] = playerState;
 			var config = _playerConfigs[playerId];
 
 			_events.OnNext(new PlayersEvent.PlayerSpawned(playerId, config));

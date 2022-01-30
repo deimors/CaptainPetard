@@ -2,21 +2,18 @@ using System;
 
 public class PlayerIdentifier : IEquatable<PlayerIdentifier>
 {
-	private readonly Guid _value;
+	public readonly int Value;
 
-	private PlayerIdentifier(Guid value)
+	public PlayerIdentifier(int value)
 	{
-		_value = value;
+		Value = value;
 	}
-
-	public static PlayerIdentifier Create()
-		=> new(Guid.NewGuid());
 
 	public bool Equals(PlayerIdentifier other)
 	{
 		if (ReferenceEquals(null, other)) return false;
 		if (ReferenceEquals(this, other)) return true;
-		return _value.Equals(other._value);
+		return Value.Equals(other.Value);
 	}
 
 	public override bool Equals(object obj)
@@ -29,8 +26,11 @@ public class PlayerIdentifier : IEquatable<PlayerIdentifier>
 
 	public override int GetHashCode()
 	{
-		return _value.GetHashCode();
+		return Value.GetHashCode();
 	}
+
+	public override string ToString()
+		=> $"Player{Value}";
 
 	public static bool operator ==(PlayerIdentifier left, PlayerIdentifier right)
 	{

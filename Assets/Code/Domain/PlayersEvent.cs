@@ -47,4 +47,16 @@ public abstract class PlayersEvent
 			PlayerId = playerId;
 		}
 	}
+
+	public class PlayerAdded : PlayersEvent
+	{
+		public PlayerIdentifier PlayerId { get; }
+		public int LifeCount { get; }
+
+		public PlayerAdded(PlayerIdentifier playerId, int lifeCount)
+		{
+			PlayerId = playerId;
+			LifeCount = lifeCount;
+		}
+	}
 }

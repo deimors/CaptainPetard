@@ -1,3 +1,4 @@
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -7,6 +8,7 @@ public class PlayerStartPositionPresenter : MonoBehaviour
 	public string VerticalAxis;
 	public string DropBomb;
 
+	public int PlayerId = 1;
 	public PlayerColours Colour;
 
 	[Inject]
@@ -19,7 +21,9 @@ public class PlayerStartPositionPresenter : MonoBehaviour
 			new PlayerInputAxes(HorizontalAxis, VerticalAxis, DropBomb),
 			Colour
 		);
-		
-		PlayersCommands.NewPlayer(config);
+
+		Observable.NextFrame()
+			.Subscribe(_ => PlayersCommands.NewPlayer(new PlayerIdentifier(PlayerId), config))
+			.AddTo(this);
 	}
 }
