@@ -59,4 +59,12 @@ public class EnemyPresenter : MonoBehaviour
 	{
 		ChooseRandomOpenDirection();
 	}
+
+	public void HandleExplosion(PlayerColours bombColour)
+	{
+		if (bombColour == EnemyColour)
+		{
+			Destroy(gameObject);
+		}
+	}
 }
