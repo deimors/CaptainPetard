@@ -23,6 +23,8 @@ public class BlockSpawnerPresenter : MonoBehaviour
     public int numberOfNeutralBlocks;
 
     public List<CellPosition> AvailableCells { get; private set; }
+
+    public List<(CellPosition position, DestructableBlockPresenter block)> SpawnedBlocks { get; } = new();
     void Start()
     {
         // Debug.Log($"Min: {nonDescructableBlocks.localBounds.min}");
@@ -51,11 +53,15 @@ public class BlockSpawnerPresenter : MonoBehaviour
     {
         var cellPosition = Random.Range(0, AvailableCells.Count());
         var selectedCell = AvailableCells.ElementAt(cellPosition);
-        Instantiate(block,
-            selectedCell.WorldPosition, Quaternion.identity, gameObject.transform);
+        var blockPresenter = Instantiate(block,
+            selectedCell.WorldPosition, Quaternion.identity, gameObject.transform).GetComponent<DestructableBlockPresenter>();
+
+        blockPresenter.BlockController = this;
+        blockPresenter.CellPosition = selectedCell;
         
         // Remove from the available pool of cells to spawn
         AvailableCells.RemoveAt(cellPosition);
+        SpawnedBlocks.Add((selectedCell, blockPresenter));
     }
 
     private IEnumerable<CellPosition> GetAvailableCells()
@@ -83,8 +89,39 @@ public class BlockSpawnerPresenter : MonoBehaviour
         }
     }
 
+    public void HandleBlockDestroyed(CellPosition position, int points)
+    {
+        // Todo: Do Something with the points
+        
+        // Remove from the spawned blocks and add back to the Available cells
+        SpawnedBlocks.RemoveAll(tuple => tuple.block.CellPosition.GridPosition == position.GridPosition);
+        AvailableCells.Add(position);
+    }
+
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            Debug.Log("Respawning blocks");
+            RespawnBlocks();
+        }
+    }
+
+    public void RespawnBlocks()
+    {
+        var blockCounts = GetSpawnedBlockCounts();
+        SpawnBlocks(blueBlocks, numberOfBlueAndRedBlocks - blockCounts.blueCount);
+        SpawnBlocks(redBlocks, numberOfBlueAndRedBlocks - blockCounts.redCount);
+        SpawnBlocks(neutralBlocks, numberOfNeutralBlocks - blockCounts.neutralCount);
+    }
+
+    private (int blueCount, int redCount, int neutralCount) GetSpawnedBlockCounts()
+    {
+        var blueCount = SpawnedBlocks.Count(s => s.block.BlockColour == BlockColours.Blue);
+        var redCount = SpawnedBlocks.Count(s => s.block.BlockColour == BlockColours.Red);
+        var neutralCount = SpawnedBlocks.Count(s => s.block.BlockColour == BlockColours.Neutral);
+
+        return (blueCount, redCount, neutralCount);
     }
 }
 
